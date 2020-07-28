@@ -30,7 +30,7 @@ We’ll also explain how to set up your own developer environment in your machin
 
 In this module, you’ll learn about the different types of operating systems, and how you can get your python code ready to interact with the operating system. We’ll learn about getting your environment set up and installing additional Python modules that will help you along the way. We’ll rundown interpreted versus compiled language, and how they differ from each other. We’ll dive into the benefits of automation, and point out common pitfalls so you can avoid them. Finally, we’ll learn about Qwiklabs, which will be used for graded assessments.
 
-**Graded:** Qwiklabs Assessment: Working with Python Scripts : Weightage 14%
+**Graded:** Qwiklabs Assessment: Working with Python Scripts : __Weightage__ 14%
 
 ### WEEK 2
 
@@ -45,7 +45,7 @@ In this module, you’ll learn about the different types of operating systems, a
 
 In this module, you’ll learn about reading and writing to files and the commands that will enable you to do this. We’ll learn the importance of managing files and how we can navigate through different directories. We’ll understand how to work with files and how there is a layer of abstraction between Python and the operating system. Finally, we’ll dive into learning about CSV files and how to best utilize them.
 
-**Graded:** Qwiklabs Assessment: Handling Files : Weightage 14%
+**Graded:** Qwiklabs Assessment: Handling Files : __Weightage__ 14%
 
 ### WEEK 3
 
@@ -60,7 +60,7 @@ In this module, you’ll learn about reading and writing to files and the comman
 
 In this module, you’ll learn about what a regular expression is and why you would use one. We’ll dive into the basics of regular expressions and give examples of wildcards, repetition qualifiers, escapare characters, and more. Next up, we’ll explore advanced regular expressions and deep dive on repetition qualifiers. You’ll tackle new exercises like capturing groups and extracting PIDs using regexes. Finally, we’ll provide a cheat sheet to serve as your go-to guide for regular expressions.
 
-**Graded:** Qwiklabs Assessment: Working with Regular Expressions : Weightage 14%
+**Graded:** Qwiklabs Assessment: Working with Regular Expressions : __Weightage__ 14%
 
 ### WEEK 4
 
@@ -76,7 +76,7 @@ In this module, you’ll learn about what a regular expression is and why you wo
 
 In this module, we’ll learn about reading and writing to data files based on an interaction with the user. Along the way, we’ll dive into standard streams, environment variables, and command line arguments. Next, we’ll jump into Python subprocesses, including system commands and how they can be used. We’ll review how to obtain output from a system command, and dive into subprocess management, including how to check exit values and manipulate the normal versus error exit values. Finally, we’ll rundown processing log files, and will cover what a log file is, how to filter log files using regular expressions, and how to understand the output captured from log files.
 
-**Graded:** Qwiklabs Assessment: Working with Log Files : Weightage 14%
+**Graded:** Qwiklabs Assessment: Working with Log Files : __Weightage__ 14%
 
 ### WEEK 5
 
@@ -91,7 +91,7 @@ In this module, we’ll learn about reading and writing to data files based on a
 
 In this module, you’ll learn how to create tests in Python. We’ll cover what testing is all about and dive into the differences between manual versus automated testing. Next, we’ll explore what unit tests are intended to do and how to write them. Then, we’ll learn about other test concepts like black box versus white box tests and how test-driven development can frame how you design and write your code. Finally, you’ll learn about errors and exceptions, and how to combat them.
 
-**Graded:** Qwiklabs Assessment: Qwiklabs Assessment: Implementing Unit Testing : Weightage 14%
+**Graded:** Qwiklabs Assessment: Qwiklabs Assessment: Implementing Unit Testing : __Weightage__ 14%
 
 ### WEEK 6
 
@@ -107,7 +107,7 @@ In this module, you’ll learn how to create tests in Python. We’ll cover what
 
 In this module, you’ll be exposed to what the Linux OS has to offer and you'll learn about Bash scripting. We’ll go over basic Linux commands and explore the many processes Linux has to offer, including a key concept called redirection. We’ll then deep dive into creating bash scripts using variables and globs. Finally, we’ll learn about advanced bash concepts and develop an understanding of when to use bash versus Python.
 
-**Graded:** Qwiklabs Assessment: Editing Files Using Substrings : Weightage 14%
+**Graded:** Qwiklabs Assessment: Editing Files Using Substrings : __Weightage__ 14%
 
 ### WEEK 7
 
@@ -124,7 +124,7 @@ In this module, you’ll put everything you’ve learned so far into action! You
 
 You'll create a problem statement to understand the challenge, conduct some research to see what options are available, then begin planning how you intend to solve the problem. Lastly, you'll write the code to implement your solution!
 
-**Graded:** Qwiklabs Assessment: Log Analysis Using Regular Expressions : Weightage 16%
+**Graded:** Qwiklabs Assessment: Log Analysis Using Regular Expressions : __Weightage__ 16%
 
 
 #
