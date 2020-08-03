@@ -136,7 +136,474 @@ by Google
 
 ### Simple Matching in Python
 
-* 
+* We use the __re module__ to apply regular expressions in Python
+	* This module includes a bunch of different functions that can help manipulate strings
+* Example
+	1. Search pattern in a String
+			```python
+			>>> import re
+			>>> result = re.search(r'aza', 'plaza')
+			>>> print(result)
+				<re.Match object: span(2, 5), match='aza'> # Our result is a match object
+			```
+		* We call the search function on the re module, and told it to use the pattern 'aza' on the string 'plaza'
+		* We then stored the return value of that function in the result variable
+		* The __`r`__ at the beginning of the pattern indicates that this is a __rawstring__
+			* This means that Python interpreter shouldn't try to interpret any special characters, and instead, should just pass the string to the function as is
+		* Our __result__ variable contains a match object
+		* The output we get when calling print already shows some interesting information, like the position in the string that matched ,and what the actual matching string was
+			<p align="center">
+			  <a href="javascript:void(0)" rel="noopener">
+				 <img width=600px  src="notesImages/output_search_re_image7.png" alt="output_search_re_image7"></a>
+			</p>
+	1. Lets try same example with different strings
+			<p align="center">
+			  <a href="javascript:void(0)" rel="noopener">
+				 <img width=600px  src="notesImages/output_search_re_image8.png" alt="output_search_re_image8"></a>
+			</p>
+		* In this case, we can see that the span attribute is different
+		* That's because the match sub-string is in a different position inside the string
+		* In this case, we can see that the span attribute is different. That's because the match sub-string is in a different position inside the string
+	1. If String does not match the pattern
+			```python
+			>>> import re
+			>>> result = re.search(r'aza', 'maze')
+			>>> print(result)
+				None
+			```
+		* If the expression doesn't match the string that we pass, we get none as a result
+		* __Remember__, __None__ is a special value that Python uses that show that there's none actual value there
+		* When we're applying regular expressions, if the search function returns none, it means it didn't find a match
+	1. Special Character in search pattern
+			```python
+			>>> import re
+			>>> result = re.search(r'^x', 'xenon')
+			>>> print(result)
+				<re.Match object: span(0, 1), match='x'>
+			```
+		* We told the search function to use the __circumflex x__ or __`^x`__ pattern on the string 'xenon'
+	1. If we use dot (.) in search string
+			```python
+			>>> import re
+			>>> result = re.search(r'p.ng', 'penguin')
+			>>> print(result)
+				<re.Match object: span(0, 4), match='peng'>
+			```
+		* we're using p.ng as a search pattern.
+		* It matches the word 'penguin' that we're passing
+		* In the match object, we see the matching string is 'peng'
+		* Some more strings to test on
+				<p align="center">
+				  <a href="javascript:void(0)" rel="noopener">
+					 <img width=600px  src="notesImages/output_search_re_image9.png" alt="output_search_re_image9"></a>
+				</p>
+			* Here we can see the match attribute always has a value of the actual sub string that match the search pattern
+			* The span attribute, indicates the range where the sub string can be found in the string we passed
+* We can also pass additional options to the search function
+	* For example
+		1. If we want our match to be case insensitive, we can do this by passing the __re.IGNORECASE__ option
+			```python
+			>>> import re
+			>>> result = re.search(r'p.ng', 'Pangaea', re.IGNORECASE)
+			>>> print(result)
+				<re.Match object: span(0, 4), match='Pang'>
+			```
+* __Always use rawstrings for regular expressions in Python__
+* Sample Code
+	* Fill in the code to check if the text passed contains the vowels a, e and i, with exactly one occurrence of any other character in between
+		```python
+		>>> import re
+		>>> def check_aei (text):
+		>>> 	# result = re.search(r"a.e.i", text)
+		>>> 	# result = re.search(r"[aei].[aei].[aei]", text)
+		>>> 	# result = re.search(r"[ae][^aei][ae]", text)
+		>>> 	result = re.search(r"([aei]).\1", text)
+		>>> 	return result != None
+		>>> print(check_aei("academia")) # True
+		>>> print(check_aei("aerial")) # False
+		>>> print(check_aei("paramedic")) # True
+		```
+
+### Wildcards and Character Classes
+
+* We can use a __dot__ in our regular expressions as a special character that can match any character
+	* In the regex world, this is known as a __wildcard__ because it can match more than one character
+* Using a __dot__ is the broadest possible wildcard because it matches absolutely any character
+* __Character Classes__ are written inside square brackets and let us list the characters we want to match inside of those brackets
+	* For example
+		1. Lets say we want to match the word Python but allow for both lowercase or uppercase "p"
+			```python
+			>>> import re
+			>>> result = re.search(r'[Pp]ython', 'Python')
+			>>> print(result)
+				<re.Match object: span(0, 6), match='Python'>
+			```
+		1. Inside the square brackets, we can also define a range of characters using a dash
+				```python
+				>>> import re
+				>>> result = re.search(r'[a-z]way', 'The end of the highway')
+				>>> print(result)
+					<re.Match object: span(18, 22), match='hway'>
+				>>> 
+				>>> result = re.search(r'[a-z]way', 'What a way to go')
+				>>> print(result)
+					None
+				```
+			* We didn't get a match for second string
+				* That's because the string way is preceded by a space and that doesn't match the range that we defined
+	* We can define more ranges like
+		1. upper case A to upper case Z for all upper case letters - `[A-Z]`
+		1. 0 to 9 for all digits - `[0-9]`
+	* We can combine as many ranges and symbols as we want
+		```python
+		>>> import re
+		>>> result = re.search(r'cloud[a-zA-Z0-9]', 'cloudy')
+		>>> print(result)
+			<re.Match object: span(0, 6), match='cloudy'>
+		>>> 
+		>>> result = re.search(r'cloud[a-zA-Z0-9]', 'cloud9')
+		>>> print(result)
+			<re.Match object: span(0, 6), match='cloud9'>
+		```
+	* We may want to match any characters that aren't in a group
+		* To do that, we use a circumflex inside the square brackets
+		* Example
+			* Example 1
+					```python
+					>>> import re
+					>>> result = re.search(r'[^a-zA-Z]', 'This is a sentence with spaces.')
+					>>> print(result)
+						<re.Match object: span(4, 5), match=' '>
+					```
+				* our pattern matched the first space in the sentence
+			* Example 2
+					```python
+					>>> import re
+					>>> result = re.search(r'[^a-zA-Z ]', 'This is a sentence with spaces.')
+					>>> print(result)
+						<re.Match object: span(30, 31), match='.'>
+					```
+				* Because we added a space inside the character class, our example now matched the final dot in the sentence, which isn't in the list of characters to exclude
+	* If we want to match either one expression or another, we can use the pipe symbol to do that
+		* Example
+			* We could have an expression that matches either the word cat or the word dog
+				```python
+				>>> import re
+				>>> result = re.search(r'cat|dog', 'I like cats.')
+				>>> print(result)
+					<re.Match object: span(7, 10), match='cat'>
+				>>> 
+				>>> result = re.search(r'cat|dog', 'I like dogs.')
+				>>> print(result)
+					<re.Match object: span(7, 10), match='dog'>
+				```
+		* Example
+			* Let's try a sentence with both dogs and cats
+				```python
+				>>> import re
+				>>> result = re.search(r'cat|dog', 'I like both dogs and cats.')
+				>>> print(result)
+					<re.Match object: span(7, 10), match='dog'>
+				```
+			* In this string, we actually have two possible matches for our search. But we only get the first one
+	* If we want to get all possible matches, we can do that using the __findall function__, which is also provided by the re module
+		```python
+		>>> import re
+		>>> result = re.findall(r'cat|dog', 'I like both dogs and cats.')
+		>>> print(result)
+			['dog', 'cat']
+		```
+* Write Regex in the code to check if the text passed contains punctuation symbols: commas, periods, colons, semicolons, question marks, and exclamation points
+	```python
+	>>> import re
+	>>> def check_punctuation (text):
+	>>> 	result = re.search(r"[\,\.\:\;\?\!]", text)
+	>>> 	return result != None
+	>>> 
+	>>> print(check_punctuation("This is a sentence that ends with a period.")) # True
+	>>> print(check_punctuation("This is a sentence fragment without a period")) # False
+	>>> print(check_punctuation("Aren't regular expressions awesome?")) # True
+	>>> print(check_punctuation("Wow! We're really picking up some steam now!")) # True
+	>>> print(check_punctuation("End of the line")) # False
+	```
+
+### Repetition Qualifiers
+
+* __Repeated Matches__
+	* It's quite common to see expressions that include a dot followed by a star
+	* This means that it matches any character repeated as many times as possible including zero
+	* Example
+		1. First Example
+				```python
+				>>> import re
+				>>> result = re.search(r"Py.*n", "Pygmalion")
+				>>> print(result)
+					<re.Match object: span(0, 9), match='Pygmalion'>
+				```
+			* In plain English, you could read this RegEx as match "Py", followed by any number of other characters followed by 'n'
+			* But with our __dot star__ (`.*`) combination we expanded the range of the match to the whole word
+		1. Second Example
+				```python
+				>>> import re
+				>>> result = re.search(r"Py.*n", "Python Programming")
+				>>> print(result)
+					<re.Match object: span(0, 17), match='Python Programmin'>
+				```
+			* Remember, the Star takes as many characters as possible
+				* In programming terms, we say that this behavior is __greedy__
+				* It's possible to modify the repetition qualifiers to make them less greedy
+			* While our pattern could have matched the word Python, it expanded all the way until the last 'n' in the string
+		1. If we only wanted our patterns match letters, we should have used the character class instead
+				```python
+				>>> import re
+				>>> result = re.search(r"Py[a-z]*n", "Python Programming")
+				>>> print(result)
+					<re.Match object: span(0, 6), match='Python'>
+				>>>
+				>>> result = re.search(r"Py.*n", "Pyn")
+				>>> print(result)
+					<re.Match object: span(0, 3), match='Pyn'>
+				```
+* Implementations of regular expressions aren't always the same
+	* Repetition qualifiers are one way they differ
+* Some implementations like the one used by __grep__ only include the __star__ (`*`) qualifier
+* Other implementations like the one used by Python or by the Egrep command include two additional repetition qualifiers
+	1. __plus__ (`+`)
+		* The __plus character__ matches one or more occurrences of the character that comes before it
+			* Example 1
+					```python
+					>>> import re
+					>>> result = re.search(r"o+l+", "goldfish")
+					>>> print(result)
+						<re.Match object; span=(1, 3), match='ol'>
+					```
+				* In this case, there was one occurrence of each
+				* In the match pattern shows us the shortest possible matching string
+			* Example 2
+					```python
+					>>> import re
+					>>> result = re.search(r"o+l+", "woolly")
+					>>> print(result)
+						<re.Match object; span=(1, 5), match='ooll'>
+					```
+				* There were two of each
+				* We can see the match is a whole string that matches the condition
+			* Example 3
+					```python
+					>>> import re
+					>>> result = re.search(r"o+l+", "boil")
+					>>> print(result)
+						None
+					```
+				* So while our string here had an O and an L, it had another character in between them. Because of this, it doesn't match the search pattern
+	1. __question mark__ (`?`)
+		* The question mark symbol is yet another multiplier
+		* It means either zero or one occurrence of the character before it
+		* Example 1
+				```python
+				>>> import re
+				>>> result = re.search(r"p?each", "To each their own")
+				>>> print(result)
+					<re.Match object; span=(3, 7), match='each'>
+				```
+			* The "P" wasn't present but with the question mark we marked it as optional, so we still got a match
+		* Example 2
+				```python
+				>>> import re
+				>>> result = re.search(r"p?each", "I like peaches")
+				>>> print(result)
+					<re.Match object; span=(7, 12), match='peach'>
+				```
+			* The "P" was president and so match included it
+* The repeating_letter_a function checks if the text passed includes the letter "a" (lowercase or uppercase) at least twice. For example, repeating_letter_a("banana") is True, while repeating_letter_a("pineapple") is False
+	```python
+	>>> import re
+	>>> def repeating_letter_a(text):
+	>>> 	result = re.search(r"([aA].*){2}", text)
+	>>> 	return result != None
+	>>> 
+	>>> print(repeating_letter_a("banana")) # True
+	>>> print(repeating_letter_a("pineapple")) # False
+	>>> print(repeating_letter_a("Animal Kingdom")) # True
+	>>> print(repeating_letter_a("A is for apple")) # True
+	```
+
+### Escaping Characters
+
+* Special Characters that we can use in our regular expressions to make them match different kinds of strings
+	1. __dot__ `.`
+	1. __star__ `*`
+	1. __plus__ `+`
+	1. __question mark__ `?`
+	1. __circumflex__ `^`
+	1. __dollar sign__ `$`
+	1. __square brackets__ `[]`
+* Lets say we wanted to check that a certain string contained a __dot__ as part of it
+	* If we just put a dot in regex, it would match any character
+	* Example
+		1. We want to match a strings that had __.com__ in them
+				```python
+				>>> import re
+				>>> result = re.search(r".com", "welcome")
+				>>> print(result)
+					<re.Match object; span=(2, 6), match='lcom'>
+				```
+			* To match an actual dot, we need to use an Escape character, which in the case of regular expressions is a backslash character
+					```python
+					>>> import re
+					>>> result = re.search(r"\.com", "welcome")
+					>>> print(result)
+						None
+					```
+				* By escaping the dot, it no longer matched the word Welcome, and since there's no __.com__ in the string, it returned None
+		1. Example 2
+				```python
+				>>> import re
+				>>> result = re.search(r"\.com", "mydomain.com")
+				>>> print(result)
+					<re.Match object; span=(8, 12), match='.com'>
+				```
+			* By adding the __backslash__, we've got this to correctly match what we wanted it to match
+			* We can use a __backslash__ in this way to escape any special characters
+* When we see a __pattern__ that includes a __backslash__, it could be escaping a __special regex character__ or a __special string character__
+* Using raw strings, like we've been doing, helps avoid some of these possible confusion because the special characters won't be interpreted when generating the string
+	* They will only be interpreted when parsing the regular expression
+* Python also uses the backslash for a few special sequences that we can use to represent predefined sets of characters
+	1. `\w` - matches any alphanumeric character including letters, numbers, and underscores
+			```python
+			>>> import re
+			>>> result = re.search(r"\w*", "This is an example") # 1st Example
+			>>> print(result)
+				<re.Match object; span=(0, 4), match='This'>
+			>>>
+			>>> result = re.search(r"\w*", "And_this_is_another") # 2nd Example
+			>>> print(result)
+				<re.Match object; span=(0, 19), match='And_this_is_another'>
+			```
+			* In 1st Example, Our pattern matched the first four letters until the space because spaces aren't part of that set of characters
+			* In 2nd Example, it matched the whole string
+	1. `\d` - for matching digits
+	1. `\s` - for matching whitespace characters like space, tab or new line
+	1. `\b` - for word boundaries
+* Write Regex to check if the text passed has at least 2 groups of alphanumeric characters (including letters, numbers, and underscores) separated by one or more whitespace characters
+	```python
+	>>> import re
+	>>> def check_character_groups(text):
+	>>> 	# result = re.search(r"\w \w*", text)
+	>>> 	result = re.search(r"[\w*][\s*][\w*]", text)
+	>>> 	return result != None
+	>>> 
+	>>> print(check_character_groups("One")) # False
+	>>> print(check_character_groups("123  Ready Set GO")) # True
+	>>> print(check_character_groups("username user_01")) # True
+	>>> print(check_character_groups("shopping_list: milk, bread, eggs.")) # False
+	```
+* __Great resource for testing__ out your regular expressions is a website called __![Regex 101 Website](https://regex101.com/)__
+
+### Regular Expressions in Action
+
+* We can combine these special characters to create patterns to match the text that we want
+* For example
+	1. Say you had a list of all the countries in the world and you want to check which of those names start and end in 'a'
+		* Checking for Country : Argentina
+				```python
+				>>> import re
+				>>> result = re.search(r"A.*a", "Argentina")
+				>>> print(result)
+					<re.Match object; span=(0, 9), match='Argentina'>
+				```
+			* Pattern works for this Country : Azerbaijan
+		* Checking for country
+				```python
+				>>> import re
+				>>> result = re.search(r"A.*a", "Azerbaijan")
+				>>> print(result)
+					<re.Match object; span=(0, 9), match='Azerbaija'>
+				```
+			* Pattern did not work as expected
+			* this happened because we didn't specify that we wanted our patterns match the whole string
+			* So while Azerbaijan doesn't finish with A, it does have an A in its name. So it matches our pattern
+			* We need to make our patterns stricter by adding the beginning of a line and end of a line characters
+					```python
+					>>> import re
+					>>> result = re.search(r"^A.*a$", "Azerbaijan")
+					>>> print(result)
+						None
+					```
+				* By adding a dollar sign to our pattern, we've made it clear that we only want to match lines that begin and end with the letter 'a'
+					* So Azerbaijan doesn't match anymore
+		* Checking for Country : Australia
+				```python
+				>>> import re
+				>>> result = re.search(r"^A.*a$", "Australia")
+				>>> print(result)
+					<re.Match object; span=(0, 9), match='Australia'>
+				```
+			* This Pattern works fine for Australia
+* Using __regular expressions__, we can also construct a pattern that would validate if the string is a valid variable name in Python
+	* __Rule__ : It can contain any number of letters numbers or underscores, but it can't start with a number
+	* __Validating pattern__ : `pattern = r"^[a-zA-Z_][a-zA-Z0-9_]*$"`
+		1. We said it needs to start with a letter
+			* So we'll start with circumflex to indicate that we wanted to start from the beginning
+		1. Now a character class with all lowercase and uppercase letters plus the underscore
+		1. The rest of the variable can have as many numbers letters or underscores that we want
+			* So we needed another character class this time containing numbers with a star at the end
+		1. We want this to be the end of the string that we're matching. Otherwise, we could match something that could be a variable, but that also contains additional stuff after it
+			* We finish up with a dollar sign
+	* __Pattern Testing__
+		* Test 1 : String has Underscores
+				```python
+				>>> import re
+				>>> pattern = r"^[a-zA-Z_][a-zA-Z0-9_]*$"
+				>>> result = re.search(pattern, "this_is_a_valid_variable_name")
+				>>> print(result)
+					<re.Match object; span=(0, 29), match='this_is_a_valid_variable_name'>
+				```
+			* we can use underscores anywhere in the string
+			* It matches our validation pattern because we included underscores in it
+		* Test 2 : String has spaces
+				```python
+				>>> import re
+				>>> pattern = r"^[a-zA-Z_][a-zA-Z0-9_]*$"
+				>>> result = re.search(pattern, "this isn't a valid variable name")
+				>>> print(result)
+					None
+				```
+			* Once we use a space, it stops being a valid variable name
+			* It doesn't matter pattern because spaces aren't included in the possible characters
+		* Test 3 : String includes number
+				```python
+				>>> import re
+				>>> pattern = r"^[a-zA-Z_][a-zA-Z0-9_]*$"
+				>>> result = re.search(pattern, "my_variable1")
+				>>> print(result)
+					<re.Match object; span=(0, 12), match='my_variable1'>
+				```
+			* We can use numbers inside the variable name
+			* Our pattern includes all numbers as part of the variable
+		* Test 4 : String starts with a number
+				```python
+				>>> import re
+				>>> pattern = r"^[a-zA-Z_][a-zA-Z0-9_]*$"
+				>>> result = re.search(pattern, "2my_variable1")
+				>>> print(result)
+					None
+				```
+			* The variable the number at the beginning isn't a valid variable name
+			* In our pattern doesn't match it because the first of two character classes doesn't include numbers
+* Write a Regex to check if the text passed looks like a standard sentence, meaning that it starts with an uppercase letter, followed by at least some lowercase letters or a space, and ends with a period, question mark, or exclamation point
+	```python
+	>> import re
+	>> def check_sentence(text):
+	>> 	result = re.search(r"^[A-Z][a-z ]*[\.\?\!]$", text)
+	>> 	return result != None
+	>> 
+	>> print(check_sentence("Is this is a sentence?")) # True
+	>> print(check_sentence("is this is a sentence?")) # False
+	>> print(check_sentence("Hello")) # False
+	>> print(check_sentence("1-2-3-GO!")) # False
+	>> print(check_sentence("A star is born.")) # True
+	```
 
 ## Advanced Regular Expressions
 
