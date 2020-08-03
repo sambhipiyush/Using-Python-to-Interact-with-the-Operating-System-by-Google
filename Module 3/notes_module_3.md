@@ -498,7 +498,7 @@ by Google
 	>>> print(check_character_groups("username user_01")) # True
 	>>> print(check_character_groups("shopping_list: milk, bread, eggs.")) # False
 	```
-* __Great resource for testing__ out your regular expressions is a website called __![Regex 101 Website](https://regex101.com/)__
+* __Great resource for testing__ out your regular expressions is a website called __[Regex 101 Website](https://regex101.com/)__
 
 ### Regular Expressions in Action
 
