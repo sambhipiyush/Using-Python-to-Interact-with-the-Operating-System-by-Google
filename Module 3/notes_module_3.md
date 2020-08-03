@@ -470,18 +470,18 @@ by Google
 	* They will only be interpreted when parsing the regular expression
 * Python also uses the backslash for a few special sequences that we can use to represent predefined sets of characters
 	1. `\w` - matches any alphanumeric character including letters, numbers, and underscores
-			```python
-			>>> import re
-			>>> result = re.search(r"\w*", "This is an example") # 1st Example
-			>>> print(result)
-				<re.Match object; span=(0, 4), match='This'>
-			>>>
-			>>> result = re.search(r"\w*", "And_this_is_another") # 2nd Example
-			>>> print(result)
-				<re.Match object; span=(0, 19), match='And_this_is_another'>
-			```
-			* In 1st Example, Our pattern matched the first four letters until the space because spaces aren't part of that set of characters
-			* In 2nd Example, it matched the whole string
+		```python
+		>>> import re
+		>>> result = re.search(r"\w*", "This is an example") # 1st Example
+		>>> print(result)
+			<re.Match object; span=(0, 4), match='This'>
+		>>>
+		>>> result = re.search(r"\w*", "And_this_is_another") # 2nd Example
+		>>> print(result)
+			<re.Match object; span=(0, 19), match='And_this_is_another'>
+		```
+		* In 1st Example, Our pattern matched the first four letters until the space because spaces aren't part of that set of characters
+		* In 2nd Example, it matched the whole string
 	1. `\d` - for matching digits
 	1. `\s` - for matching whitespace characters like space, tab or new line
 	1. `\b` - for word boundaries
