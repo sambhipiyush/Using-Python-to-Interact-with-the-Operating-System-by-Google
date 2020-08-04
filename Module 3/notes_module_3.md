@@ -669,4 +669,374 @@ by Google
 
 ### Capturing Groups
 
-* 
+* __Capturing Groups__ are portions of the pattern that are enclosed in parentheses
+	* For Example
+		* Let's say that we have a list of people's full names. These names are stored as last name, comma, first name
+			* We want to turn this around and create a string that starts with the first name followed by the last name
+			* We can do this using a regular expression with capturing groups
+			* To do this
+				* First we'll create a matching pattern that matches a group of letters followed by a comma, a space, and then another group of letters
+				* To capture our groups, we'll put each group of letters between parentheses like this
+					```python
+					>>> import re
+					>>> result = re.search(r"^(\w*), (\w*)$", "Lovelace, Ada")
+					>>> print(result)
+						<re.Match object; span=(0, 13), match='Lovelace, Ada'>
+					```
+					* __Remember__ that \w will match letters, numbers, and underscores
+					* The match object has more attributes and methods than the ones shown by print
+	* __groups()__ method
+		* Because we defined two separate groups, the __group()__ method returns a tuple of two elements
+			```python
+			>>> import re
+			>>> result = re.search(r"^(\w*), (\w*)$", "Lovelace, Ada")
+			>>> print(result)
+				<re.Match object; span=(0, 13), match='Lovelace, Ada'>
+			>>>
+			>>> print(result.groups())
+				('Lovelace', 'Ada')
+			```
+		* We can also use indexing to access these groups
+		* The first element contains the text matched by the entire regular expression
+		* Each successive element contains the data that was matched by every subsequent match group
+			```python
+			>>> import re
+			>>> result = re.search(r"^(\w*), (\w*)$", "Lovelace, Ada")
+			>>> print(result)
+				<re.Match object; span=(0, 13), match='Lovelace, Ada'>
+			>>>
+			>>> print(result.groups())
+				('Lovelace', 'Ada')
+			>>>
+			>>> print(result[0])
+				Lovelace, Ada
+			>>> ## Now, the following index is correspond to each of the captured groups
+			>>> print(result[1])
+				Lovelace
+			>>> print(result[2])
+				Ada
+			>>>
+			>>> ## We can construct the name that we want by using these indexes
+			>>> '{} {}'.format(result[2], result[1])
+				Ada Lovelace
+			```
+		* Creating function for above regex pattern
+			```python
+			>>> import re
+			>>> def rearrange_name(name):
+			>>> 	pattern = r"^(\w*), (\w*)$"
+			>>> 	result = re.search(pattern, name)
+			>>> 	if result is None:
+			>>> 		return name
+			>>> 	return '{} {}'.format(result[2], result[1])
+			```
+			<p align="center">
+			  <a href="javascript:void(0)" rel="noopener">
+				 <img width=600px  src="notesImages/rearrange_name_example_image10.png" alt="rearrange_name_example_image10"></a>
+			</p>
+		* The regular expression used in the rearrange_name function so that it can match middle names, middle initials, as well as double surnames
+			```python
+			>>> import re
+			>>> def rearrange_name(name):
+			>>> 	# result = re.search(r"^(\w*), ([\w \.\-]*)$", name)
+			>>>		result = re.search(r"^([\w \.-]*), ([\w \.-]*)$", name)
+			>>> 	if result == None:
+			>>> 		return name
+			>>> 	return "{} {}".format(result[2], result[1])
+			>>> 
+			>>> name=rearrange_name("Kennedy, John F.")
+			>>> print(name)
+				John F. Kennedy
+			```
+
+### More on Repetition Qualifiers
+
+* Python offers __Numeric Repetition Qualifiers__
+	* These are written between curly brackets and can be one or two numbers specifying a range
+	* For example
+		* To match any string of exactly five letters
+			 ```python
+			>>> import re
+			>>> result = re.search(r"[a-zA-Z]{5}", "a ghost")
+			>>> print(result)
+				<re.Match object; span=(2, 7), match='ghost'>
+			>>>
+			```
+			* __Remember__, that the expression will match whichever part of the given string that fits the criteria
+			* In this case, we're looking for letters that are repeated five times, and ghost has five letters, so it matched our pattern
+		* String with multiple matches, we get only the first one
+			```python
+			>>> import re
+			>>> result = re.search(r"[a-zA-Z]{5}", "a scary ghost appeared")
+			>>> print(result)
+				<re.Match object; span=(2, 7), match='scary'>
+			>>>
+			```
+			* In this string, we actually have more matches for our search, but we only get the first one
+		* Using __findall__ function, to get all the matches
+			```python
+			>>> import re
+			>>> result = re.findall(r"[a-zA-Z]{5}", "a scary ghost appeared")
+			>>> print(result)
+				['scary', 'ghost', 'appea']
+			>>>
+			```
+			* Now we have an extra match for the word that's actually longer
+		* Using \b, which matches word limits at the beginning and end of the pattern, to indicate that we want full words
+			* We want to match all the words that are exactly five letters long
+				```python
+				>>> import re
+				>>> result = re.findall(r"\b[a-zA-Z]{5}\b", "A scary ghost appeared")
+				>>> print(result)
+					['scary', 'ghost']
+				>>>
+				```
+		* We can also have 2 numbers in the range
+			* For example
+				* If we wanted to match a range of five to ten letters or numbers
+					```python
+					>>> import re
+					>>> result = re.findall(r"\w{5,10}", "I really like strawberries")
+					>>> print(result)
+						['really', 'strawberri']
+					>>>
+					```
+					* These ranges can also be open ended
+					* A number followed by a comma means at least that many repetitions with no upper boundary limited only by the maximum repetitions in the source text
+						```python
+						>>> import re
+						>>> result = re.findall(r"\w{5,}", "I really like strawberries")
+						>>> print(result)
+							['really', 'strawberries']
+						>>>
+						```
+				* A comma followed by a number means from zero up to that amount of repetitions
+					```python
+					>>> import re
+					>>> result = re.search(r"s\w{,20}", "I really like strawberries")
+					>>> print(result)
+						<re.Match object; span=(14, 26), match='strawberries'>
+					>>>
+					```
+					* We look for a pattern that was an S followed by up to 20 alphanumeric characters.
+						* So we got a match for strawberries which starts with S, and is followed by 11 characters
+							<p align="center">
+							  <a href="javascript:void(0)" rel="noopener">
+								 <img width=600px  src="notesImages/repetition_qualifiers_example_image11.png" alt="repetition_qualifiers_example_image11"></a>
+							</p>
+* Write Regex for The long_words function returns all words that are at least 7 characters
+	```python
+	>>> import re
+	>>> def long_words(text):
+	>>> 	pattern = r'\w{7,}'
+	>>> 	result = re.findall(pattern, text)
+	>>> 	return result
+	>>> 
+	>>> print(long_words("I like to drink coffee in the morning.")) # ['morning']
+	>>> print(long_words("I also have a taste for hot chocolate in the afternoon.")) # ['chocolate', 'afternoon']
+	>>> print(long_words("I never drink tea late at night.")) # []
+	```
+
+### Extracting a PID Using regexes in Python
+
+* Extracting PID 
+	* Pattern : `regex = r"\[(\d+)]"`
+	* Log : log = "July 31 07:51:48 mycomputer bad_process[12345]: ERROR Performing package upgrade"
+		```python
+		>>> import re
+		>>> log = "July 31 07:51:48 mycomputer bad_process[12345]: ERROR Performing package upgrade"
+		>>> regex = r"\[(\d+)]"
+		>>> result = re.search(regex, log)
+		>>> print(result[1])
+			12345
+		```
+		* The first character of the pattern is the __backslash__, which is used as the __escape character__
+			* This means that the next character, which is a __square bracket__, is treated literally for __matching purposes__
+		* After the square bracket, comes the first parentheses
+			* Since it isn't escaped, we know it'll be used as a __capturing group__
+		* The __capturing group__ parentheses are wrapping the backslash `d+` symbols
+			* we know that this expression will match __one or more numerical characters__
+		* After the closing parentheses of the capturing group, we have the closing square bracket symbol, also proceeded by the escape character
+		* After calling the __search()__ function, we know that because we're capturing __groups__ in an expression, we can access the __matching data__ by accessing the value __at index 1__
+	* Example
+		```python
+		>>> import re
+		>>> text_string = "A completely different string that also has numbers [34567]"
+		>>> regex = r"\[(\d+)]"
+		>>> result = re.search(regex, text_string)
+		>>> print(result[1])
+			34567
+		```
+	* If our string didn't actually have a block of numbers between the square brackets
+		```python
+		>>> import re
+		>>> text_string = "99 elephants in a [cage]"
+		>>> regex = r"\[(\d+)]"
+		>>> result = re.search(regex, text_string)
+		>>> print(result[1])
+			ERROR: IMAGE BELOW
+		```
+		<p align="center">
+		  <a href="javascript:void(0)" rel="noopener">
+			 <img width=600px  src="notesImages/error_result_1_image12.png" alt="error_result_1_image12"></a>
+		</p>
+		* We tried to access the index 1 of a variable that was None
+		* As Python tells us, this isn't something that we can do
+	* We should have a function that extracts the process ID or PID when possible, and does something else if not
+		```python
+		>>> def extract_pid(log_line):
+		>>> 	regex = r"\[(\d+)]"
+		>>> 	result = re.search(regex, log_line)
+		>>> 	if result is None:
+		>>> 		return ""
+		>>> 	return result[1]
+		>>> print(extract_pid(log))
+			12345
+		>>> print(extract_pid("99 elephants in a [cage]"))
+			'' # Did not match, so empty string is returned
+		```
+* the regular expression used in the extract_pid function, to return the uppercase message in parenthesis, after the process id.
+	```python
+	>>> import re
+	>>> def extract_pid(log_line):
+	>>>     # regex = r"\[(\d+)\]\: (\b[A-Z]+\b)"
+	>>>     # regex = r"\[(\d+)\]\:\s(\b[A-Z]{2,}\b)"
+	>>>     regex = r"\[(\d+)\]\:\s(\b[A-Z]+\b)"
+	>>>     result = re.search(regex, log_line)
+	>>>     if result is None:
+	>>> 		return None
+	>>> 	# print(result.groups())
+	>>> 	return "{} ({})".format(result[1], result[2])
+	>>> 
+	>>> print(extract_pid("July 31 07:51:48 mycomputer bad_process[12345]: ERROR Performing package upgrade")) # 12345 (ERROR)
+	>>> print(extract_pid("99 elephants in a [cage]")) # None
+	>>> print(extract_pid("A string that also has numbers [34567] but no uppercase message")) # None
+	>>> print(extract_pid("July 31 08:08:08 mycomputer new_process[67890]: RUNNING Performing backup")) # 67890 (RUNNING)
+	```
+
+### Splitting and Replacing
+
+* There are actually a few more functions in __re module__ that can be really handy depending on what we're trying to do
+	1. __split()__ function
+		* It works similarly to the split function that we used before with strings
+			* But instead of taking a string as a separator, you can take any regular expression as a separator
+		* Example
+			* We may want to split a piece of text into separate sentences
+				* To do that we need to check not only for the dots but also for question marks or exclamation marks since they're also valid sentence endings
+					```python
+					>>> import re
+					>>> result = re.split(r"[.?!]", "One sentence. Another one? And the last one!")
+					>>> print(result)
+						['One sentence', ' Another one', ' And the last one', '']
+					```
+					* Check out how we are not escaping the characters that we wrote inside the square brackets
+						* That's because anything that's inside the square brackets is taking for the literal character and not for its special meaning
+					* Also see how the notation marks aren't present in the resulting list
+			* If we want our split list to include the elements that we're using to split the values we can use capturing parentheses
+				```python
+				>>> import re
+				>>> result = re.split(r"([.?!])", "One sentence. Another one? And the last one!")
+				>>> print(result)
+					['One sentence', '.', ' Another one', '?', ' And the last one', '!', '']
+				```
+				* This gave us both the sentences and notation marks as elements of a list
+	1. __sub()__ function
+		* It's used for creating new strings by substituting all or part of them for a different string
+		* similar to the replace string method but using regular expressions for both the matching and the replacing
+		* For Example
+			1. Let's see this in an example. So we had some logs in our system that included e-mail addresses of users and we wanted to anonymize the data by removing all the addresses
+				```python
+				>>> import re
+				>>> result = re.sub(r"[\w.%+-]+@[\w.-]+", "[REDACTED]", "Received an email for go_nuts95@my.example.com")
+				>>> print(result)
+					Received an email for [REDACTED]
+				```
+				* The expression that we're using for identifying email addresses has two parts: the part before that __at (@)__ sign and the part after it
+				* Part before __at (@)__ sign
+					* We include the alphanumeric characters represented by backslash w which includes letters, numbers, and the underscore sign as well as a dot, percentage sign, plus, and dash
+				* After the at sign
+					* we only allow the alphanumeric characters dot and dash
+				* This will match all email addresses as well as some strings that aren't really valid email addresses like an address with two dots
+			1. Switch the order of names of people and use sub to create the new string
+				```python
+				>>> import re
+				>>> result = re.sub(r"^([\w \.-]*), ([\w \.-]*)$", r'\2 \1', "Lovelace, Ada")
+				>>> print(result)
+					Ada Lovelace
+				```
+				* In the first parameter, we've got an expression that contains the two groups that we want to match: one before the comma and one after the comma
+				* We want to use a second parameter to replace the matching string
+				* We use __backslash two__ to indicate the second captured group followed by a space and __backslash one__ to indicate the first captured group
+				* __When referring to captured groups, a backslash followed by a number indicates the corresponding captured group__
+					* This is a general notation for regular expressions, and it's used by many tools that support regexes, not just Python
+					* We can also use them to match patterns that repeat themselves which use capturing groups as back references
+* We're working with a CSV file, which contains employee information. Each record has a name field, followed by a phone number field, and a role field. The phone number field contains U.S. phone numbers, and needs to be modified to the international format, with "+1-" in front of the phone number. Fill in the regular expression, using groups, to use the transform_record function to do that
+	```python
+	>>> import re
+	>>> def transform_record(record):
+	>>> 	new_record = re.sub(r"\b(\d{3}-\d{3}-?\d{4})\b",r"+1-\1",record)
+	>>> 	return new_record
+	>>> 
+	>>> print(transform_record("Sabrina Green,802-867-5309,System Administrator")) 
+	>>> # Sabrina Green,+1-802-867-5309,System Administrator
+	>>> 
+	>>> print(transform_record("Eli Jones,684-3481127,IT specialist")) 
+	>>> # Eli Jones,+1-684-3481127,IT specialist
+	>>> 
+	>>> print(transform_record("Melody Daniels,846-687-7436,Programmer")) 
+	>>> # Melody Daniels,+1-846-687-7436,Programmer
+	>>> 
+	>>> print(transform_record("Charlie Rivera,698-746-3357,Web Developer")) 
+	>>> # Charlie Rivera,+1-698-746-3357,Web Developer
+	```
+* The multi_vowel_words function returns all words with 3 or more consecutive vowels (a, e, i, o, u). Fill in the regular expression to do that
+	```python
+	>>> import re
+	>>> def multi_vowel_words(text):
+	>>> 	pattern = r'\b\w*[aeiou]{3,}\w*\b'
+	>>> 	result = re.findall(pattern, text)
+	>>> 	return result
+	>>> 
+	>>> print(multi_vowel_words("Life is beautiful")) 
+	>>> # ['beautiful']
+	>>> 
+	>>> print(multi_vowel_words("Obviously, the queen is courageous and gracious.")) 
+	>>> # ['Obviously', 'queen', 'courageous', 'gracious']
+	>>> 
+	>>> print(multi_vowel_words("The rambunctious children had to sit quietly and await their delicious dinner.")) 
+	>>> # ['rambunctious', 'quietly', 'delicious']
+	>>> 
+	>>> print(multi_vowel_words("The order of a data queue is First In First Out (FIFO)")) 
+	>>> # ['queue']
+	>>> 
+	>>> print(multi_vowel_words("Hello world!")) 
+	>>> # []
+	```
+* The transform_comments function converts comments in a Python script into those usable by a C compiler. This means looking for text that begins with a hash mark (#) and replacing it with double slashes (//), which is the C single-line comment indicator. For the purpose of this exercise, we'll ignore the possibility of a hash mark embedded inside of a Python command, and assume that it's only used to indicate a comment. We also want to treat repetitive hash marks (##), (###), etc., as a single comment indicator, to be replaced with just (//) and not (#//) or (//#). Fill in the parameters of the substitution method to complete this function
+	```python
+	>>> import re
+	>>> def transform_comments(line_of_code):
+	>>> 	result = re.sub('#{1,}', '//', line_of_code)
+	>>> 	return result
+	>>> 
+	>>> print(transform_comments("### Start of program")) 
+	>>> # Should be "// Start of program"
+	>>> print(transform_comments("  number = 0   ## Initialize the variable")) 
+	>>> # Should be "  number = 0   // Initialize the variable"
+	>>> print(transform_comments("  number += 1   # Increment the variable")) 
+	>>> # Should be "  number += 1   // Increment the variable"
+	>>> print(transform_comments("  return(number)")) 
+	>>> # Should be "  return(number)"
+	```
+* The convert_phone_number function checks for a U.S. phone number format: XXX-XXX-XXXX (3 digits followed by a dash, 3 more digits followed by a dash, and 4 digits), and converts it to a more formal format that looks like this: (XXX) XXX-XXXX. Fill in the regular expression to complete this function
+	```python
+	>>> import re
+	>>> def convert_phone_number(phone):
+	>>> 	result = re.sub(r'(\d{3})-(\d{3})-(\d{4})\b', r'(\1) \2-\3', phone)
+	>>> 	return result
+	>>> 
+	>>> print(convert_phone_number("My number is 212-345-9999.")) # My number is (212) 345-9999.
+	>>> print(convert_phone_number("Please call 888-555-1234")) # Please call (888) 555-1234
+	>>> print(convert_phone_number("123-123-12345")) # 123-123-12345
+	>>> print(convert_phone_number("Phone number of Buckingham Palace is +44 303 123 7300")) # Phone number of Buckingham Palace is +44 303 123 7300
+	```
