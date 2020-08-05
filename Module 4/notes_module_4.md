@@ -384,7 +384,7 @@ by Google
 * Log files contain a lot of useful information, particularly when you're trying to debug a tricky problem that's happening on a computer
 	<p align="center">
 	  <a href="javascript:void(0)" rel="noopener">
-		 <img width=600px  src="notesImages/log_diag_image20.png" alt="log_diag_image20"></a>
+		 <img width=200px  src="notesImages/log_diag_image20.png" alt="log_diag_image20"></a>
 	</p>
 * On the flip side, sometimes it can be overwhelming to try to find something inside of a log file that contains a whole lot of lines with a whole lot of things in them
 * So it's a good idea to learn how we can process these files and get our tools to extract information that we want out of them
