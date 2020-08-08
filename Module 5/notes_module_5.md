@@ -493,7 +493,7 @@ by Google
 		  <a href="javascript:void(0)" rel="noopener">
 			 <img width=600px  src="notesImages/test_driven_approach_image16.png" alt="test_driven_approach_image16"></a>
 		</p>
-		* __NOTE:__ The cycle is repeated for each new feature of your script until it's up and running
+		* **NOTE:** The cycle is repeated for each new feature of your script until it's up and running
 * __Continuous Integration__
 	* Many companies take testing a step further and combine it with our version control systems and development processes
 	* When engineers submit their code, it's integrated into the main repository and tests are automatically run against it to spot bugs and errors in a process called __Continuous Integration__
