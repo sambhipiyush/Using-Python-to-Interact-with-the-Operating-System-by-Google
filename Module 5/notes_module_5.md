@@ -489,10 +489,10 @@ by Google
 	1. Once you've verified it fails, you write the code that will satisfy the test then run the tests again
 	1. If it passes you can continue on to the next part of your program
 	1. If it fails you Debug and run the test again
-		<p align="center">
-		  <a href="javascript:void(0)" rel="noopener">
-			 <img width=600px  src="notesImages/test_driven_approach_image16.png" alt="test_driven_approach_image16"></a>
-		</p>
+			<p align="center">
+			  <a href="javascript:void(0)" rel="noopener">
+				 <img width=600px  src="notesImages/test_driven_approach_image16.png" alt="test_driven_approach_image16"></a>
+			</p>
 		* **NOTE:** The cycle is repeated for each new feature of your script until it's up and running
 * __Continuous Integration__
 	* Many companies take testing a step further and combine it with our version control systems and development processes
