@@ -7,11 +7,6 @@ by Google
 #
 ## Title: Final Project
 
-## SUB-TITLE
+## ALL THE BEST WITH FINAL PROJECT !!! 
 
-### SUB-SUB-TITLE
-
-<p align="center">
-  <a href="javascript:void(0)" rel="noopener">
-	 <img width=600px  src="notesImages/threads_script_image1.png" alt="threads_script_image1"></a>
-</p>
+### KUDOS !!! :-)
