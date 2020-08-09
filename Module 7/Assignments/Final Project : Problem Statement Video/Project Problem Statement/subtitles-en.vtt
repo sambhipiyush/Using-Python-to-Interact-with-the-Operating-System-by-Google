@@ -1,0 +1,347 @@
+WEBVTT
+
+1
+00:00:07.490 --> 00:00:10.500
+Imagine a scenario, one of
+
+2
+00:00:10.500 --> 00:00:11.910
+the servers used by your company
+
+3
+00:00:11.910 --> 00:00:13.875
+runs a service called ticky.
+
+4
+00:00:13.875 --> 00:00:16.920
+This service is an internal
+ticketing system used by
+
+5
+00:00:16.920 --> 00:00:18.210
+a lot of different teams in
+
+6
+00:00:18.210 --> 00:00:20.175
+the company to manage their work.
+
+7
+00:00:20.175 --> 00:00:23.100
+The service logs a bunch
+of events to syslog,
+
+8
+00:00:23.100 --> 00:00:24.960
+both when it runs successfully
+
+9
+00:00:24.960 --> 00:00:26.880
+and when it encounters errors.
+
+10
+00:00:26.880 --> 00:00:29.010
+Developers of the
+service are asking for
+
+11
+00:00:29.010 --> 00:00:30.165
+your help with getting some
+
+12
+00:00:30.165 --> 00:00:32.100
+information out of those logs,
+
+13
+00:00:32.100 --> 00:00:34.020
+to better understand how
+the software is being
+
+14
+00:00:34.020 --> 00:00:37.245
+used and how to
+improve it. No sweat.
+
+15
+00:00:37.245 --> 00:00:39.585
+As an up and coming
+IT Professional,
+
+16
+00:00:39.585 --> 00:00:42.150
+you enthusiastically
+accept this mission.
+
+17
+00:00:42.150 --> 00:00:45.325
+So for your final
+project in this course,
+
+18
+00:00:45.325 --> 00:00:47.300
+you'll write some
+automation scripts that
+
+19
+00:00:47.300 --> 00:00:49.220
+will process the system log and
+
+20
+00:00:49.220 --> 00:00:50.870
+generate a bunch of
+reports based on
+
+21
+00:00:50.870 --> 00:00:53.570
+the information extracted
+from log files.
+
+22
+00:00:53.570 --> 00:00:55.220
+The log lines follow
+
+23
+00:00:55.220 --> 00:00:57.820
+a pattern similar to the
+ones we've seen before.
+
+24
+00:00:57.820 --> 00:01:00.310
+Something like this.
+
+25
+00:01:01.640 --> 00:01:04.125
+When the service runs correctly,
+
+26
+00:01:04.125 --> 00:01:06.375
+it logs an info
+message to syslog,
+
+27
+00:01:06.375 --> 00:01:07.680
+stating what it's done,
+
+28
+00:01:07.680 --> 00:01:11.120
+the username, and the ticket
+number related to the event.
+
+29
+00:01:11.120 --> 00:01:13.425
+If the service
+encounters a problem,
+
+30
+00:01:13.425 --> 00:01:15.700
+it logs in error
+message to the syslog,
+
+31
+00:01:15.700 --> 00:01:17.630
+indicating what was wrong and the
+
+32
+00:01:17.630 --> 00:01:18.860
+username that
+triggered the action
+
+33
+00:01:18.860 --> 00:01:20.120
+that caused the problem.
+
+34
+00:01:20.120 --> 00:01:21.995
+The developers of
+the service want
+
+35
+00:01:21.995 --> 00:01:24.185
+two different reports
+out of this data.
+
+36
+00:01:24.185 --> 00:01:26.045
+The first one is a ranking
+
+37
+00:01:26.045 --> 00:01:28.130
+of errors generated
+by the system.
+
+38
+00:01:28.130 --> 00:01:31.279
+This means a list of all
+error messages logged,
+
+39
+00:01:31.279 --> 00:01:33.799
+and how many times each
+of them was found,
+
+40
+00:01:33.799 --> 00:01:36.485
+not taking into account
+the users involved.
+
+41
+00:01:36.485 --> 00:01:38.780
+They should be sorted by
+the most common error
+
+42
+00:01:38.780 --> 00:01:40.400
+to the least common error.
+
+43
+00:01:40.400 --> 00:01:44.495
+The second one is a usage
+statistics for the service.
+
+44
+00:01:44.495 --> 00:01:48.005
+This means, a list of all users
+that have used the system
+
+45
+00:01:48.005 --> 00:01:49.850
+including how many
+info messages and
+
+46
+00:01:49.850 --> 00:01:52.415
+how many error messages
+they've generated.
+
+47
+00:01:52.415 --> 00:01:55.700
+This report should be
+sorted by username.
+
+48
+00:01:55.700 --> 00:01:58.100
+To visualize the data
+in these reports,
+
+49
+00:01:58.100 --> 00:02:00.470
+you want to generate a
+couple of webpages that'll
+
+50
+00:02:00.470 --> 00:02:03.350
+be served by a web server
+running on the machine.
+
+51
+00:02:03.350 --> 00:02:06.185
+To do this, you can make
+use of a script that's
+
+52
+00:02:06.185 --> 00:02:09.830
+already in the system
+called csv_ to_html.py.
+
+53
+00:02:09.830 --> 00:02:13.145
+This script converts
+the data in a CSV file
+
+54
+00:02:13.145 --> 00:02:16.650
+into an HTML file containing
+a table with the data.
+
+55
+00:02:16.650 --> 00:02:19.430
+Then, put the files
+in the directory
+
+56
+00:02:19.430 --> 00:02:22.330
+that's used by the webserver
+to display the webpages.
+
+57
+00:02:22.330 --> 00:02:24.455
+The goal is to have one
+script that can get
+
+58
+00:02:24.455 --> 00:02:26.660
+all the necessary work
+done automatically,
+
+59
+00:02:26.660 --> 00:02:29.615
+every day without any
+user interaction.
+
+60
+00:02:29.615 --> 00:02:32.575
+This script doesn't need
+to do all the work itself.
+
+61
+00:02:32.575 --> 00:02:34.355
+It can call on
+other scripts to do
+
+62
+00:02:34.355 --> 00:02:37.070
+individual task and then
+put the results together.
+
+63
+00:02:37.070 --> 00:02:39.740
+In fact, we recommend
+splitting the task so
+
+64
+00:02:39.740 --> 00:02:42.545
+that each piece can be written
+and tested separately.
+
+65
+00:02:42.545 --> 00:02:44.635
+I imagine that your
+mind is racing,
+
+66
+00:02:44.635 --> 00:02:46.485
+your pulse might have
+spread up a little bit,
+
+67
+00:02:46.485 --> 00:02:49.010
+and your palms are sweating
+all over the keyboard.
+
+68
+00:02:49.010 --> 00:02:52.185
+Don't worry. This might
+sound like a lot of work.
+
+69
+00:02:52.185 --> 00:02:54.030
+But once you've understood
+the problem and
+
+70
+00:02:54.030 --> 00:02:56.050
+done some research and planning,
+
+71
+00:02:56.050 --> 00:02:58.295
+everything will start
+to fall into place.
+
+72
+00:02:58.295 --> 00:03:00.800
+In our next video, we'll
+give you some tips on how
+
+73
+00:03:00.800 --> 00:03:04.110
+to start breaking this
+task down. Here we go.

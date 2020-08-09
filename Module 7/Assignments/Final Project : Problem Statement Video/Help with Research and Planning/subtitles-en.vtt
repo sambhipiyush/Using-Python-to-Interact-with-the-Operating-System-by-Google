@@ -1,0 +1,269 @@
+WEBVTT
+
+1
+00:00:07.640 --> 00:00:09.705
+We've now gone over
+
+2
+00:00:09.705 --> 00:00:12.090
+the problems statement
+of our final project.
+
+3
+00:00:12.090 --> 00:00:15.420
+At first sight, it might
+sound pretty complex.
+
+4
+00:00:15.420 --> 00:00:16.800
+But let's break it down into
+
+5
+00:00:16.800 --> 00:00:18.660
+smaller more
+digestible pieces and
+
+6
+00:00:18.660 --> 00:00:20.070
+discuss how we can move into
+
+7
+00:00:20.070 --> 00:00:22.590
+the next steps to do the
+necessary research and planning.
+
+8
+00:00:22.590 --> 00:00:24.150
+We've said that we want to find
+
+9
+00:00:24.150 --> 00:00:27.015
+some specific log lines
+in the sy log file.
+
+10
+00:00:27.015 --> 00:00:28.770
+We strongly recommend
+that you use
+
+11
+00:00:28.770 --> 00:00:30.705
+regular expressions to find them.
+
+12
+00:00:30.705 --> 00:00:33.690
+It'll be easier to extract
+information you want that way.
+
+13
+00:00:33.690 --> 00:00:35.960
+To figure out the right
+regular expression,
+
+14
+00:00:35.960 --> 00:00:38.925
+you can use a website
+like Greg X101.com
+
+15
+00:00:38.925 --> 00:00:40.595
+which can help you
+test your expression
+
+16
+00:00:40.595 --> 00:00:42.635
+and understand what's
+going on with it.
+
+17
+00:00:42.635 --> 00:00:45.095
+Once you have a pattern
+that you think and work,
+
+18
+00:00:45.095 --> 00:00:47.750
+try it out in a Python
+interpreter to verify that it
+
+19
+00:00:47.750 --> 00:00:49.010
+matches the right lines
+
+20
+00:00:49.010 --> 00:00:51.035
+and captures the
+right information.
+
+21
+00:00:51.035 --> 00:00:53.090
+After extracting the information,
+
+22
+00:00:53.090 --> 00:00:54.635
+you'll need to count
+how many errors
+
+23
+00:00:54.635 --> 00:00:55.820
+are of the same type,
+
+24
+00:00:55.820 --> 00:00:57.875
+and how many info
+and error messages
+
+25
+00:00:57.875 --> 00:00:59.660
+there are for a given user.
+
+26
+00:00:59.660 --> 00:01:00.830
+Can you think of what
+
+27
+00:01:00.830 --> 00:01:02.750
+data structure might
+help you with that?
+
+28
+00:01:02.750 --> 00:01:04.625
+If you're thinking dictionaries,
+
+29
+00:01:04.625 --> 00:01:06.140
+then you're on the right track.
+
+30
+00:01:06.140 --> 00:01:08.465
+You'll want to use a couple
+of different dictionaries.
+
+31
+00:01:08.465 --> 00:01:10.310
+One to account error messages and
+
+32
+00:01:10.310 --> 00:01:12.665
+another to count per user usage.
+
+33
+00:01:12.665 --> 00:01:14.735
+You'll then need to sort the data
+
+34
+00:01:14.735 --> 00:01:17.075
+in a dictionary's by
+different criteria.
+
+35
+00:01:17.075 --> 00:01:18.620
+We looked at sorting in
+
+36
+00:01:18.620 --> 00:01:20.510
+the Introduction
+to Python course.
+
+37
+00:01:20.510 --> 00:01:22.850
+Feel free to re-watch
+that video and
+
+38
+00:01:22.850 --> 00:01:25.640
+reread the Python
+documentation on sorting.
+
+39
+00:01:25.640 --> 00:01:27.320
+The output of your Python script
+
+40
+00:01:27.320 --> 00:01:29.060
+should be a couple of CSV files.
+
+41
+00:01:29.060 --> 00:01:31.430
+Each of them containing
+the names of the columns
+
+42
+00:01:31.430 --> 00:01:34.435
+and the data in the order that
+it needs to be presented.
+
+43
+00:01:34.435 --> 00:01:36.400
+Once those files are generated,
+
+44
+00:01:36.400 --> 00:01:39.185
+you'll need to call
+the CSV html.py
+
+45
+00:01:39.185 --> 00:01:42.995
+script to create HTML
+files based on CSV data.
+
+46
+00:01:42.995 --> 00:01:45.710
+You'll have access to look
+at how the script works
+
+47
+00:01:45.710 --> 00:01:48.440
+but the key is to pass
+two parameters to it.
+
+48
+00:01:48.440 --> 00:01:49.850
+The name of the CSV file to
+
+49
+00:01:49.850 --> 00:01:53.045
+read and the name of
+the HTML file generate.
+
+50
+00:01:53.045 --> 00:01:54.725
+You could do this last step from
+
+51
+00:01:54.725 --> 00:01:57.245
+either a Python script
+or a bash script.
+
+52
+00:01:57.245 --> 00:01:58.880
+Since the script will be only
+
+53
+00:01:58.880 --> 00:02:00.770
+calling commands
+and moving files,
+
+54
+00:02:00.770 --> 00:02:02.935
+we recommend doing a bash.
+
+55
+00:02:02.935 --> 00:02:05.105
+Keep it short and sweet.
+
+56
+00:02:05.105 --> 00:02:06.725
+We recommend that you research,
+
+57
+00:02:06.725 --> 00:02:08.330
+plan and even write the pieces of
+
+58
+00:02:08.330 --> 00:02:10.805
+code all before starting
+the actual lab.
+
+59
+00:02:10.805 --> 00:02:13.280
+Good luck. You've got it.

@@ -1,0 +1,33 @@
+We've now gone over the problems statement
+of our final project. At first sight, it might
+sound pretty complex. But let's break it down into smaller more
+digestible pieces and discuss how we can move into the next steps to do the
+necessary research and planning. We've said that we want to find some specific log lines
+in the sy log file. We strongly recommend
+that you use regular expressions to find them. It'll be easier to extract
+information you want that way. To figure out the right
+regular expression, you can use a website
+like Greg X101.com which can help you
+test your expression and understand what's
+going on with it. Once you have a pattern
+that you think and work, try it out in a Python
+interpreter to verify that it matches the right lines and captures the
+right information. After extracting the information, you'll need to count
+how many errors are of the same type, and how many info
+and error messages there are for a given user. Can you think of what data structure might
+help you with that? If you're thinking dictionaries, then you're on the right track. You'll want to use a couple
+of different dictionaries. One to account error messages and another to count per user usage. You'll then need to sort the data in a dictionary's by
+different criteria. We looked at sorting in the Introduction
+to Python course. Feel free to re-watch
+that video and reread the Python
+documentation on sorting. The output of your Python script should be a couple of CSV files. Each of them containing
+the names of the columns and the data in the order that
+it needs to be presented. Once those files are generated, you'll need to call
+the CSV html.py script to create HTML
+files based on CSV data. You'll have access to look
+at how the script works but the key is to pass
+two parameters to it. The name of the CSV file to read and the name of
+the HTML file generate. You could do this last step from either a Python script
+or a bash script. Since the script will be only calling commands
+and moving files, we recommend doing a bash. Keep it short and sweet. We recommend that you research, plan and even write the pieces of code all before starting
+the actual lab. Good luck. You've got it.
