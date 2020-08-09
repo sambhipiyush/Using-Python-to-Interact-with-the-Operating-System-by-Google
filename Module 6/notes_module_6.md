@@ -792,35 +792,35 @@ by Google
 				  <a href="javascript:void(0)" rel="noopener">
 					 <img width=600px  src="notesImages/cut_command_example_image39.png" alt="cut_command_example_image39"></a>
 				</p>
-				* In our example, we're passing __dash d space__ (`-d' '`) to cut to tell it that we want to use a space as a delimiter
-					* __dash f5 dash__ (`-f5-`) that tell it that we want to print the field number 5 and everything that comes after it
-					* With that, we remove the date and the name of the computer keeping only the process and the event message
-				* Now that we have the information that we care about, we can pipe this to the same pipeline of commands that we saw in an earlier video to find out the lines that are repeated the most
+			* In our example, we're passing __dash d space__ (`-d' '`) to cut to tell it that we want to use a space as a delimiter
+				* __dash f5 dash__ (`-f5-`) that tell it that we want to print the field number 5 and everything that comes after it
+				* With that, we remove the date and the name of the computer keeping only the process and the event message
+			* Now that we have the information that we care about, we can pipe this to the same pipeline of commands that we saw in an earlier video to find out the lines that are repeated the most
+				```shell
+				>>> cut -d' ' -f5- /var/log/syslog | sort | uniq -c | sort -nr | head
+				```
+				<p align="center">
+				  <a href="javascript:void(0)" rel="noopener">
+					 <img width=600px  src="notesImages/cut_command_example_image40.png" alt="cut_command_example_image40"></a>
+				</p>
+			* we've chained together a bunch of commands so that we get the most repetitive lines in our __syslog file__
+			* So we can use a for loop to iterate over each of the log files in `var/log` and get the most repeated lines in each of them
+			* Bash script to get most repetitives lines in syslogs
+				* In this script we process all files in `var/log` that end in log
+				* We then print the name of the file that we're processing and then use the same group of commands as before to print the top five lines in each file
 					```shell
-					>>> cut -d' ' -f5- /var/log/syslog | sort | uniq -c | sort -nr | head
+					>>> #!/bin/bash
+					>>> # Filename : toploglines.sh
+					>>> 
+					>>> for logfile in /var/log/*log; do
+					>>> 	echo "Processing: $logfile"
+					>>> 	cut -d' ' -f5- $logfile | sort | uniq -c | sort -nr | head -5
+					>>> done
 					```
 					<p align="center">
 					  <a href="javascript:void(0)" rel="noopener">
-						 <img width=600px  src="notesImages/cut_command_example_image40.png" alt="cut_command_example_image40"></a>
+						 <img width=600px  src="notesImages/cut_cmd_varlog_syslogs_example_image41.png" alt="cut_cmd_varlog_syslogs_example_image41"></a>
 					</p>
-					* we've chained together a bunch of commands so that we get the most repetitive lines in our __syslog file__
-					* So we can use a for loop to iterate over each of the log files in `var/log` and get the most repeated lines in each of them
-					* Bash script to get most repetitives lines in syslogs
-						* In this script we process all files in `var/log` that end in log
-						* We then print the name of the file that we're processing and then use the same group of commands as before to print the top five lines in each file
-							```shell
-							>>> #!/bin/bash
-							>>> # Filename : toploglines.sh
-							>>> 
-							>>> for logfile in /var/log/*log; do
-							>>> 	echo "Processing: $logfile"
-							>>> 	cut -d' ' -f5- $logfile | sort | uniq -c | sort -nr | head -5
-							>>> done
-							```
-							<p align="center">
-							  <a href="javascript:void(0)" rel="noopener">
-								 <img width=600px  src="notesImages/cut_cmd_varlog_syslogs_example_image41.png" alt="cut_cmd_varlog_syslogs_example_image41"></a>
-							</p>
 * __cut__ command
 	* This command, let's us take only bits of each line using a field delimiter
 
